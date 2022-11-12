@@ -1,0 +1,9 @@
+.footer_margins {
+  margin: 67px auto 60px;
+}
+
+@media screen and (max-width: 940px) {
+  .footer_margins {
+    margin: 48px 19px 36px;
+  }
+}

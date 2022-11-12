@@ -1,0 +1,9 @@
+.popup__close-icon {
+  margin: 0;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  background-image: url('../../../images/Close-Icon.png');
+  background-size: contain;
+  align-self: flex-end;
+}

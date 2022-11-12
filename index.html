@@ -7,46 +7,94 @@
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
-<body class="page border">
-  <header class="header header_margins border">
+<body class="page">
+  <header class="header header_margins">
     <img class="header__logo" src="./images/logoheader.svg" alt="Логотип Mesto Russia">
     <div class="header__line"></div>
   </header>
   <main>
-    <section class="elements border">
-      <ul class="elements__list border">
+    <section class="elements">
+      <ul class="elements__list">
         <li>
-          <div class="element border">
-
+          <div class="element">
+            <img class="element__mask-group" src="./images/karachaevsk.png" alt="Карачаевск 1">
+            <div class="element__text-like">
+              <p class="element__text">
+                Карачаевск
+              </p>
+              <div class="element__like"></div>
+            </div>
           </div>
         </li>
         <li>
-          <div class="element border">
-
+          <div class="element">
+            <img class="element__mask-group" src="./images/elbrus.png" alt="Эльбрус 1">
+            <div class="element__text-like">
+              <p class="element__text">
+                Гора Эльбрус
+              </p>
+              <div class="element__like"></div>
+            </div>
           </div>
         </li>
         <li>
-          <div class="element border">
-
+          <div class="element">
+            <img class="element__mask-group" src="./images/dombai.png" alt="Домбай 1">
+            <div class="element__text-like">
+              <p class="element__text">
+                Домбай
+              </p>
+              <div class="element__like"></div>
+            </div>
           </div>
         </li>
         <li>
-          <div class="element border">
-
+          <div class="element">
+            <img class="element__mask-group" src="./images/elbrus.png" alt="Эльбрус 2">
+            <div class="element__text-like">
+              <p class="element__text">
+                Гора Эльбрус
+              </p>
+              <div class="element__like"></div>
+            </div>
           </div>
         </li>
         <li>
-          <div class="element border">
-
+          <div class="element">
+            <img class="element__mask-group" src="./images/dombai.png" alt="Домбай 2">
+            <div class="element__text-like">
+              <p class="element__text">
+                Домбай
+              </p>
+              <div class="element__like"></div>
+            </div>
           </div>
         </li>
         <li>
-          <div class="element border">
-
+          <div class="element">
+            <img class="element__mask-group" src="./images/karachaevsk.png" alt="Карачаевск 2">
+            <div class="element__text-like">
+              <p class="element__text">
+                Карачаево-Черкессия
+              </p>
+              <div class="element__like"></div>
+            </div>
           </div>
         </li>
       </ul>
     </section>
   </main>
+  <footer class="footer footer_margins border">
+    <p class="footer__text border">
+      &copy;&nbsp;2020 Mesto Russia
+    </p>
+  </footer>
+  <div class="popup">
+    <div class="popup__container border">
+      <button class="popup__close-icon border"></button>
+      <!-- <img class="popup__close-icon border" alt="иконка крестика"> -->
+    </div>
+  </div>
+  <script src="./scripts/script.js"></script>
 </body>
 </html>
