@@ -10,9 +10,22 @@
 <body class="page">
   <header class="header header_margins">
     <img class="header__logo" src="./images/logoheader.svg" alt="Логотип Mesto Russia">
-    <div class="header__line"></div>
   </header>
   <main>
+    <section class="profile profile_margins">
+      <div class="profile__avatar">
+        <img class="profile__image" src="./images/profile_avatar.png" alt="Фото человека">
+        <div class="profile__ellipse"></div>
+      </div>
+      <div class="profile__info">
+        <div class="profile__top-string">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+        <button class="profile__edit-button"></button>
+        </div>
+        <h2 class="profile__job">Исследователь океана</h2>
+      </div>
+      <button class="profile__add-button"></button>
+    </section>
     <section class="elements">
       <ul class="elements__list">
         <li>
@@ -84,17 +97,22 @@
       </ul>
     </section>
   </main>
-  <footer class="footer footer_margins border">
-    <p class="footer__text border">
+  <footer class="footer footer_margins">
+    <p class="footer__text">
       &copy;&nbsp;2020 Mesto Russia
     </p>
   </footer>
-  <div class="popup">
-    <div class="popup__container border">
-      <button class="popup__close-icon border"></button>
-      <!-- <img class="popup__close-icon border" alt="иконка крестика"> -->
+  <section class="popup">
+    <div class="popup__container">
+      <button class="popup__close-icon"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <input class="popup__field-name" type="text" value="Жак-Ив Кусто">
+      <div class="popup__line"></div>
+      <input class="popup__field-job" type="text" value="Исследователь океана">
+      <div class="popup__line"></div>
+      <button class="popup__submit">Сохранить</button>
     </div>
-  </div>
+  </section>
   <script src="./scripts/script.js"></script>
 </body>
 </html>
