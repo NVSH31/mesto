@@ -21,6 +21,8 @@ function toggleLike(likeElement) {
 
 function openPopup() {
   popupElement.classList.add('popup_opened');
+  nameInput.value = profileElement.querySelector('.profile__name').textContent;
+  jobInput.value = profileElement.querySelector('.profile__job').textContent;
 }
 
 function closePopup() {
