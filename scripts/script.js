@@ -2,27 +2,16 @@ const popupElement = document.querySelector('.popup');
 const openPopupElement = document.querySelector('.profile__edit-button');
 const closePopupElement = popupElement.querySelector('.popup__close-icon');
 let formElement = popupElement.querySelector('.popup__container');
-let nameInput = formElement.querySelector('.popup__field-name');
-let jobInput = formElement.querySelector('.popup__field-job');
+let nameInput = formElement.querySelector('.popup__field_about_name');
+let jobInput = formElement.querySelector('.popup__field_about_job');
 let profileElement = document.querySelector('.profile');
-let elementsElement = document.querySelector('.elements');
-let likeAllElement = [
-  elementsElement.querySelector('#element__like-0'),
-  elementsElement.querySelector('#element__like-1'),
-  elementsElement.querySelector('#element__like-2'),
-  elementsElement.querySelector('#element__like-3'),
-  elementsElement.querySelector('#element__like-4'),
-  elementsElement.querySelector('#element__like-5')
-];
-
-function toggleLike(likeElement) {
-  likeElement.classList.toggle('element__like_active');
-}
+let profileNameElement = profileElement.querySelector('.profile__name');
+let profileJobElement = profileElement.querySelector('.profile__job');
 
 function openPopup() {
   popupElement.classList.add('popup_opened');
-  nameInput.value = profileElement.querySelector('.profile__name').textContent;
-  jobInput.value = profileElement.querySelector('.profile__job').textContent;
+  nameInput.value = profileNameElement.textContent;
+  jobInput.value = profileJobElement.textContent;
 }
 
 function closePopup() {
@@ -31,14 +20,11 @@ function closePopup() {
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
-  profileElement.querySelector('.profile__name').textContent = nameInput.value;
-  profileElement.querySelector('.profile__job').textContent = jobInput.value;
+  profileNameElement.textContent = nameInput.value;
+  profileJobElement.textContent = jobInput.value;
   closePopup();
 }
 
-for (let i=0; i<likeAllElement.length; i++) {
-  likeAllElement[i].addEventListener('click', () => toggleLike(likeAllElement[i]));
-}
 
 openPopupElement.addEventListener('click', openPopup);
 closePopupElement.addEventListener('click', closePopup);

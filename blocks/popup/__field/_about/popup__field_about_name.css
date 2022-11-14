@@ -1,0 +1,8 @@
+.popup__field_about_name {
+  margin-top: 47px;
+}
+@media screen and (max-width: 602px) {
+  .popup__field_about_name {
+    margin-top: 75px;
+  }
+}

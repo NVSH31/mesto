@@ -8,23 +8,20 @@
   <title>Mesto</title>
 </head>
 <body class="page">
-  <header class="header header_margins">
+  <header class="header">
     <img class="header__logo" src="./images/logoheader.svg" alt="Логотип Mesto Russia">
   </header>
   <main>
-    <section class="profile profile_margins">
-      <div class="profile__avatar">
-        <img class="profile__image" src="./images/profile_avatar.png" alt="Фото человека">
-        <div class="profile__ellipse"></div>
-      </div>
+    <section class="profile">
+      <img class="profile__image" src="./images/profile_avatar.png" alt="Фото человека">
       <div class="profile__info">
         <div class="profile__top-string">
           <h1 class="profile__name">Жак-Ив Кусто Очень Длинное Имя</h1>
-        <button class="profile__edit-button"></button>
+        <button class="profile__edit-button" type="button"></button>
         </div>
-        <h2 class="profile__job">Исследователь океана, изобретатель акваланга, режиссёр, владелец корабля</h2>
+        <p class="profile__job">Исследователь океана, изобретатель акваланга, режиссёр, владелец корабля</p>
       </div>
-      <button class="profile__add-button"></button>
+      <button class="profile__add-button" type="button"></button>
     </section>
     <section class="elements">
       <ul class="elements__list">
@@ -32,10 +29,10 @@
           <div class="element">
             <img class="element__mask-group" src="./images/karachaevsk.png" alt="Карачаевск 1">
             <div class="element__text-like">
-              <p class="element__text">
+              <h2 class="element__text">
                 Карачаевск
-              </p>
-              <button class="element__like" id="element__like-0"></button>
+              </h2>
+              <button class="element__like" id="element__like-0" type="button"></button>
             </div>
           </div>
         </li>
@@ -43,10 +40,10 @@
           <div class="element">
             <img class="element__mask-group" src="./images/elbrus.png" alt="Эльбрус 1">
             <div class="element__text-like">
-              <p class="element__text">
+              <h2 class="element__text">
                 Гора Эльбрус
-              </p>
-              <button class="element__like" id="element__like-1"></button>
+              </h2>
+              <button class="element__like" id="element__like-1" type="button"></button>
             </div>
           </div>
         </li>
@@ -54,10 +51,10 @@
           <div class="element">
             <img class="element__mask-group" src="./images/dombai.png" alt="Домбай 1">
             <div class="element__text-like">
-              <p class="element__text">
+              <h2 class="element__text">
                 Домбай
-              </p>
-              <button class="element__like" id="element__like-2"></button>
+              </h2>
+              <button class="element__like" id="element__like-2" type="button"></button>
             </div>
           </div>
         </li>
@@ -65,10 +62,10 @@
           <div class="element">
             <img class="element__mask-group" src="./images/elbrus.png" alt="Эльбрус 2">
             <div class="element__text-like">
-              <p class="element__text">
+              <h2 class="element__text">
                 Гора Эльбрус
-              </p>
-              <button class="element__like" id="element__like-3"></button>
+              </h2>
+              <button class="element__like" id="element__like-3" type="button"></button>
             </div>
           </div>
         </li>
@@ -76,10 +73,10 @@
           <div class="element">
             <img class="element__mask-group" src="./images/dombai.png" alt="Домбай 2">
             <div class="element__text-like">
-              <p class="element__text">
+              <h2 class="element__text">
                 Домбай
-              </p>
-              <button class="element__like" id="element__like-4"></button>
+              </h2>
+              <button class="element__like" id="element__like-4" type="button"></button>
             </div>
           </div>
         </li>
@@ -87,31 +84,31 @@
           <div class="element">
             <img class="element__mask-group" src="./images/karachaevsk.png" alt="Карачаевск 2">
             <div class="element__text-like">
-              <p class="element__text">
+              <h2 class="element__text">
                 Карачаево-Черкессия
-              </p>
-              <button class="element__like" id="element__like-5"></button>
+              </h2>
+              <button class="element__like" id="element__like-5" type="button"></button>
             </div>
           </div>
         </li>
       </ul>
     </section>
   </main>
-  <footer class="footer footer_margins">
+  <footer class="footer">
     <p class="footer__text">
       &copy;&nbsp;2020 Mesto Russia
     </p>
   </footer>
   <section class="popup">
-    <form class="popup__container">
-      <button type="reset" class="popup__close-icon"></button>
-      <h2 class="popup__title">Редактировать профиль</h2>
-      <input class="popup__field-name" type="text" value="">
-      <div class="popup__line"></div>
-      <input class="popup__field-job" type="text" value="">
-      <div class="popup__line"></div>
-      <button type="submit" class="popup__submit">Сохранить</button>
-    </form>
+    <div class="popup__container">
+      <button type="button" class="popup__close-icon"></button>
+      <form class="popup__form" name="profile__form">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input class="popup__field popup__field_about_name" type="text" value="">
+        <input class="popup__field popup__field_about_job" type="text" value="">
+        <button type="submit" class="popup__submit">Сохранить</button>
+      </form>
+    </div>
   </section>
   <script src="./scripts/script.js"></script>
 </body>

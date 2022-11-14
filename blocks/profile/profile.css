@@ -1,5 +1,5 @@
 .profile {
-  margin: 0;
+  margin: 40px auto 0;
   padding: 0;
   box-sizing: border-box;
   width: 880px;
@@ -11,11 +11,13 @@
 
 @media screen and (max-width: 940px) {
   .profile {
+    margin: 36px 19px 0;
     width: auto;
   }
 }
 @media screen and (max-width: 602px) {
   .profile {
+    margin-top: 38px;
     flex-direction: column;
     align-items: center;
   }
