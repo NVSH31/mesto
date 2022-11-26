@@ -25,72 +25,6 @@
     </section>
     <section class="elements">
       <ul class="elements__list">
-        <li>
-          <div class="element">
-            <img class="element__mask-group" src="./images/karachaevsk.png" alt="Карачаевск 1">
-            <div class="element__text-like">
-              <h2 class="element__text">
-                Карачаевск
-              </h2>
-              <button class="element__like" id="element__like-0" type="button"></button>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="element">
-            <img class="element__mask-group" src="./images/elbrus.png" alt="Эльбрус 1">
-            <div class="element__text-like">
-              <h2 class="element__text">
-                Гора Эльбрус
-              </h2>
-              <button class="element__like" id="element__like-1" type="button"></button>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="element">
-            <img class="element__mask-group" src="./images/dombai.png" alt="Домбай 1">
-            <div class="element__text-like">
-              <h2 class="element__text">
-                Домбай
-              </h2>
-              <button class="element__like" id="element__like-2" type="button"></button>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="element">
-            <img class="element__mask-group" src="./images/elbrus.png" alt="Эльбрус 2">
-            <div class="element__text-like">
-              <h2 class="element__text">
-                Гора Эльбрус
-              </h2>
-              <button class="element__like" id="element__like-3" type="button"></button>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="element">
-            <img class="element__mask-group" src="./images/dombai.png" alt="Домбай 2">
-            <div class="element__text-like">
-              <h2 class="element__text">
-                Домбай
-              </h2>
-              <button class="element__like" id="element__like-4" type="button"></button>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="element">
-            <img class="element__mask-group" src="./images/karachaevsk.png" alt="Карачаевск 2">
-            <div class="element__text-like">
-              <h2 class="element__text">
-                Карачаево-Черкессия
-              </h2>
-              <button class="element__like" id="element__like-5" type="button"></button>
-            </div>
-          </div>
-        </li>
       </ul>
     </section>
   </main>
@@ -102,14 +36,26 @@
   <section class="popup">
     <div class="popup__container">
       <button type="button" class="popup__close-icon"></button>
-      <form class="popup__form" name="profile__form">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__field popup__field_about_name" type="text" value="">
-        <input class="popup__field popup__field_about_job" type="text" value="">
-        <button type="submit" class="popup__submit">Сохранить</button>
+      <form class="popup__form" name="">
+        <h2 class="popup__title"></h2>
+        <input class="popup__field" type="" value="">
+        <input class="popup__field" type="" value="">
+        <button type="submit" class="popup__submit"></button>
       </form>
     </div>
   </section>
+  <template id="card-template">
+    <li>
+      <div class="element">
+        <img class="element__mask-group" src="" alt="">
+        <div class="element__text-like">
+          <h2 class="element__text"></h2>
+          <button class="element__like" type="button"></button>
+          <button class="element__trash" type="button"></button>
+        </div>
+      </div>
+    </li>
+  </template>
   <script src="./scripts/script.js"></script>
 </body>
 </html>

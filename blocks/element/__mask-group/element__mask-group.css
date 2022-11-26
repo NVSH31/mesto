@@ -1,4 +1,6 @@
 .element__mask-group {
   margin: 0;
   padding: 0;
+  height: 282px;
+  object-fit: cover;
 }
