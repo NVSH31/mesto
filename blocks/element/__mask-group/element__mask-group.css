@@ -4,3 +4,6 @@
   height: 282px;
   object-fit: cover;
 }
+.element__mask-group:hover {
+  cursor: pointer;
+}

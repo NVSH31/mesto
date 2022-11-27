@@ -4,7 +4,6 @@
   display: flex;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.8s;
   justify-content: center;
   align-items: center;
   position: fixed;
