@@ -1,21 +1,23 @@
-// import initialCards from "./data.js"; - не работает без запущенного сервера
+const popupProfileElement = document.querySelector('.popup_profile');
+const profileFormElement = popupProfileElement.querySelector('.popup__form');
+const nameInputElement = popupProfileElement.querySelector('.popup__field_name');
+const jobInputElement = popupProfileElement.querySelector('.popup__field_job');
 
-const popupElement = document.querySelector('.popup');
-const containerFormsElement = popupElement.querySelector('.popup__container-forms');
-const containerImageElement = popupElement.querySelector('.popup__container-image');
+const popupCardElement = document.querySelector('.popup_card');
+const cardFormElement = popupCardElement.querySelector('.popup__form');
+const titleInputElement = popupCardElement.querySelector('.popup__field_title');
+const urlInputElement = popupCardElement.querySelector('.popup__field_url');
+
+const popupImageElement = document.querySelector('.popup_image');
 const editProfileElement = document.querySelector('.profile__edit-button');
 const addCardElement = document.querySelector('.profile__add-button');
-const closePopupFormsElement = containerFormsElement.querySelector('.popup__close-icon');
-const closePopupImageElement = containerImageElement.querySelector('.popup__close-icon');
-let formElement = popupElement.querySelector('.popup__form');
-let profileElement = document.querySelector('.profile');
-let profileNameElement = profileElement.querySelector('.profile__name');
-let profileJobElement = profileElement.querySelector('.profile__job');
-const formTitleElement = formElement.querySelector('.popup__title');
-const inputFields = formElement.querySelectorAll('.popup__field');
+const profileElement = document.querySelector('.profile');
+const profileNameElement = profileElement.querySelector('.profile__name');
+const profileJobElement = profileElement.querySelector('.profile__job');
 
 const cardsListElement = document.querySelector('.elements__list');
 const templateCardElement = document.querySelector('#card-template').content.querySelector('li');
+const closeButtons = document.querySelectorAll('.popup__close-icon');
 
 const initialCards = [
   {
@@ -44,6 +46,14 @@ const initialCards = [
   }
 ];
 
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+
 function createCard(item) {
   const card = templateCardElement.cloneNode(true);
   const cardText = card.querySelector('.element__text');
@@ -63,11 +73,9 @@ function createCard(item) {
 }
 
 function openImage(evt) {
-  popupElement.classList.add('popup_opened');
-  popupElement.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
-  containerImageElement.classList.add('popup__container-image_opened');
-  const image = popupElement.querySelector('.popup__image');
-  const signature = popupElement.querySelector('.popup__signature');
+  popupImageElement.classList.add('popup_opened');
+  const image = popupImageElement.querySelector('.popup__image');
+  const signature = popupImageElement.querySelector('.popup__signature');
   image.src = evt.target.src;
   signature.textContent = evt.target.alt;
 }
@@ -89,70 +97,49 @@ initialCards.forEach(function(item) {
   renderCard(item, cardsListElement);
 } );
 
-function editProfile() {
-  popupElement.classList.add('popup_opened');
-  containerFormsElement.classList.add('popup__container-forms_opened');
-  formElement.name = 'edit-profile__form';
-  inputFields[0].classList.add('popup__field_about_name');
-  inputFields[0].type = 'text';
-  inputFields[1].classList.add('popup__field_about_job');
-  inputFields[1].type = 'text';
-
-  formTitleElement.textContent = 'Редактировать профиль';
-  formElement.querySelector('.popup__submit').textContent = 'Сохранить';
-  inputFields[0].value = profileNameElement.textContent;
-  inputFields[1].value = profileJobElement.textContent;
+function openProfileForm() {
+  openPopup(popupProfileElement);
+  nameInputElement.value = profileNameElement.textContent;
+  jobInputElement.value = profileJobElement.textContent;
 }
 
-function addCard() {
-  popupElement.classList.add('popup_opened');
-  containerFormsElement.classList.add('popup__container-forms_opened');
-  formElement.name = 'add-card__form';
-  inputFields[0].classList.add('popup__field_about_name');
-  inputFields[0].type = 'text';
-  inputFields[0].value = '';
-  inputFields[0].placeholder = 'Название';
-  inputFields[1].classList.add('popup__field_about_job');
-  inputFields[1].type = 'url';
-  inputFields[1].value = '';
-  inputFields[1].placeholder = 'Ссылка на картинку';
-  formTitleElement.textContent = 'Новое место';
-  formElement.querySelector('.popup__submit').textContent = 'Создать';
+function openCardForm() {
+  openPopup(popupCardElement);
+  titleInputElement.value = '';
+  urlInputElement.value = '';
+  titleInputElement.placeholder = 'Название';
+  urlInputElement.placeholder = 'Ссылка на картинку';
 }
 
-function closeFormsPopup() {
-  popupElement.classList.remove('popup_opened');
-  containerFormsElement.classList.remove('popup__container-forms_opened');
-}
-
-function closeImagePopup() {
-  popupElement.classList.remove('popup_opened');
-  containerImageElement.classList.remove('popup__container-image_opened');
-}
-
-function formSubmitHandler (evt) {
+function submitProfileForm(evt) {
   evt.preventDefault();
-  const currentFormName = evt.target.closest('form').name;
-  if (currentFormName === 'edit-profile__form') {
-    profileNameElement.textContent = inputFields[0].value;
-    profileJobElement.textContent = inputFields[1].value;
-  } else if (currentFormName === 'add-card__form') {
-    const newCardData = {
-      name: inputFields[0].value,
-      link: inputFields[1].value
-    };
-    if (newCardData['name'] && newCardData['link']) {
-      const newCard = createCard(newCardData);
-      cardsListElement.prepend(newCard);
-    }
+  if (nameInputElement.value && jobInputElement.value) {
+    profileNameElement.textContent = nameInputElement.value;
+    profileJobElement.textContent = jobInputElement.value;
   }
-  closeFormsPopup();
+  closePopup(popupProfileElement);
 }
 
+function submitCardForm(evt) {
+  evt.preventDefault();
+  const newCardData = {
+    name: titleInputElement.value,
+    link: urlInputElement.value
+  };
+  if (titleInputElement.value && urlInputElement.value) {
+    const newCard = createCard(newCardData);
+    cardsListElement.prepend(newCard);
+  }
+  closePopup(popupCardElement);
+}
 
-editProfileElement.addEventListener('click', editProfile);
-addCardElement.addEventListener('click', addCard);
+editProfileElement.addEventListener('click', openProfileForm);
+addCardElement.addEventListener('click', openCardForm);
 
-closePopupFormsElement.addEventListener('click', closeFormsPopup);
-closePopupImageElement.addEventListener('click', closeImagePopup);
-formElement.addEventListener('submit', formSubmitHandler);
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popup));
+});
+
+profileFormElement.addEventListener('submit', submitProfileForm);
+cardFormElement.addEventListener('submit', submitCardForm);
