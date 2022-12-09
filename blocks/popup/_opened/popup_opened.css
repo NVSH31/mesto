@@ -3,3 +3,6 @@
   opacity: 1;
   transition: opacity 0.8s;
 }
+.popup_opened:hover {
+  cursor: pointer;
+}

@@ -3,3 +3,6 @@
   flex-direction: column;
   position: relative;
 }
+.popup__container:hover {
+  cursor: auto;
+}
