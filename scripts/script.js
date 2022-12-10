@@ -9,6 +9,7 @@ const popupCardElement = document.querySelector('.popup_card');
 const cardFormElement = popupCardElement.querySelector('.popup__form');
 const titleInputElement = popupCardElement.querySelector('.popup__field_title');
 const urlInputElement = popupCardElement.querySelector('.popup__field_url');
+const buttonCardFormSubmit = cardFormElement.querySelector('.popup__submit');
 
 const popupImageElement = document.querySelector('.popup_image');
 const imageElement = popupImageElement.querySelector('.popup__image');
@@ -24,10 +25,10 @@ const cardsListElement = document.querySelector('.elements__list');
 const templateCardElement = document.querySelector('#card-template').content.querySelector('li');
 const buttonCloseList = document.querySelectorAll('.popup__close-icon');
 
-
 function closePopupByEscape(evt) {
-  const currentPopup = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
+    const currentPopup = document.querySelector('.popup_opened');
+
     closePopup(currentPopup);
   }
 }
@@ -99,13 +100,15 @@ function handleProfileFormSubmit(evt) {
 
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
+
   const newCardData = {
     name: titleInputElement.value,
     link: urlInputElement.value
   };
   const newCard = createCard(newCardData);
+
   cardsListElement.prepend(newCard);
-  const buttonCardFormSubmit = popupCardElement.querySelector('.popup__submit');
+
   evt.target.reset();
   closePopup(popupCardElement);
   buttonCardFormSubmit.disabled = true;
@@ -117,6 +120,7 @@ buttonAddCard.addEventListener('click', openCardForm);
 
 buttonCloseList.forEach((button) => {
   const popup = button.closest('.popup');
+
   button.addEventListener('click', () => closePopup(popup));
 });
 

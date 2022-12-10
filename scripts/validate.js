@@ -1,5 +1,6 @@
 const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorSpanElement = formElement.querySelector(`#${inputElement.id}-error`);
+
   inputElement.classList.add(config.inputErrorClass);
   errorSpanElement.textContent = errorMessage;
   errorSpanElement.classList.add(config.errorClass);
@@ -7,6 +8,7 @@ const showInputError = (formElement, inputElement, errorMessage, config) => {
 
 const hideInputError = (formElement, inputElement, config) => {
   const errorSpanElement = formElement.querySelector(`#${inputElement.id}-error`);
+
   inputElement.classList.remove(config.inputErrorClass);
   errorSpanElement.classList.remove(config.errorClass);
   errorSpanElement.textContent = '';
@@ -39,6 +41,7 @@ const isValid = (formElement, inputElement, config) => {
 const setEventListeners = (formElement, config) => {
   const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
+
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       isValid(formElement, inputElement, config);
@@ -49,6 +52,7 @@ const setEventListeners = (formElement, config) => {
 
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
+
   formList.forEach((formElement) => {
     setEventListeners(formElement, config);
   });
