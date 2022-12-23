@@ -1,3 +1,9 @@
+import { initialCards, config } from './constants.js';
+import { Card } from './Cards.js';
+import { FormValidator } from './FormValidator.js';
+
+const cardTemplateSelector = '#card-template';
+
 const allPopups = document.querySelectorAll('.popup');
 
 const popupProfileElement = document.querySelector('.popup_profile');
@@ -22,7 +28,6 @@ const profileNameElement = profileElement.querySelector('.profile__name');
 const profileJobElement = profileElement.querySelector('.profile__job');
 
 const cardsListElement = document.querySelector('.elements__list');
-const templateCardElement = document.querySelector('#card-template').content.querySelector('li');
 const buttonCloseList = document.querySelectorAll('.popup__close-icon');
 
 function closePopupByEscape(evt) {
@@ -33,7 +38,7 @@ function closePopupByEscape(evt) {
   }
 }
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupByEscape);
 }
@@ -43,28 +48,6 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closePopupByEscape);
 }
 
-function createCard(cardData) {
-  const card = templateCardElement.cloneNode(true);
-  const cardText = card.querySelector('.element__text');
-  const cardImage = card.querySelector('img');
-  const cardLikeButton = card.querySelector('.element__like');
-  const cardDeleteButton = card.querySelector('.element__trash');
-
-  cardText.textContent = cardData.name;
-  cardImage.src = cardData.link;
-  cardImage.alt = cardData.name;
-
-  cardLikeButton.addEventListener('click', () => {
-    cardLikeButton.classList.toggle('element__like_active');
-  });
-  cardDeleteButton.addEventListener('click', () => {
-    card.remove();
-  });
-  cardImage.addEventListener('click', () => openImage(cardData));
-
-  return card;
-}
-
 function openImage(cardData) {
   openPopup(popupImageElement);
   imageElement.src = cardData.link;
@@ -72,23 +55,31 @@ function openImage(cardData) {
   signatureElement.textContent = cardData.name;
 }
 
-const renderCard = (cardData, wrapElement) => {
-  const card = createCard(cardData);
-  wrapElement.append(card);
+const createCard = (cardData) => {
+  const card = new Card(cardData, cardTemplateSelector, openImage);
+  const cardElement = card.generateCard();
+
+  return cardElement;
 }
 
-initialCards.forEach(function(cardData) {
-  renderCard(cardData, cardsListElement);
-} );
+initialCards.forEach((cardData) => {
+  cardsListElement.append(createCard(cardData));
+});
 
 function openProfileForm() {
   openPopup(popupProfileElement);
   nameInputElement.value = profileNameElement.textContent;
   jobInputElement.value = profileJobElement.textContent;
+
+  const newFormValidator = new FormValidator(config, profileFormElement);
+  newFormValidator.enableValidation();
 }
 
 function openCardForm() {
   openPopup(popupCardElement);
+
+  const newFormValidator = new FormValidator(config, cardFormElement);
+  newFormValidator.enableValidation();
 }
 
 function handleProfileFormSubmit(evt) {
@@ -105,9 +96,8 @@ function handleCardFormSubmit(evt) {
     name: titleInputElement.value,
     link: urlInputElement.value
   };
-  const newCard = createCard(newCardData);
 
-  cardsListElement.prepend(newCard);
+  cardsListElement.prepend(createCard(newCardData));
 
   evt.target.reset();
   closePopup(popupCardElement);
