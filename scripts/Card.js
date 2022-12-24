@@ -9,7 +9,7 @@ export class Card {
   _getTemplate() {
     const cardElement = document
     .querySelector(this._templateSelector)
-    .content.querySelector('li')
+    .content.querySelector('.elements__item')
     .cloneNode(true);
 
     return cardElement;
@@ -21,10 +21,7 @@ export class Card {
 
   _deleteCard() {
     this._cardElement.remove();
-  }
-
-  _handleImageClick(cardData) {
-    this._openImage(cardData);
+    this._cardElement = null;
   }
 
   _setEventListeners() {
@@ -41,7 +38,7 @@ export class Card {
     });
 
     this._image.addEventListener('click', () => {
-      this._handleImageClick({link: this._link, name: this._name});
+      this._openImage({link: this._link, name: this._name});
     });
   }
 

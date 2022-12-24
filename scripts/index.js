@@ -1,5 +1,5 @@
 import { initialCards, config } from './constants.js';
-import { Card } from './Cards.js';
+import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 
 const cardTemplateSelector = '#card-template';
@@ -70,17 +70,19 @@ function openProfileForm() {
   openPopup(popupProfileElement);
   nameInputElement.value = profileNameElement.textContent;
   jobInputElement.value = profileJobElement.textContent;
-
-  const newFormValidator = new FormValidator(config, profileFormElement);
-  newFormValidator.enableValidation();
+  validatorProfileForm.resetValidation();
 }
+
+const validatorProfileForm = new FormValidator(config, profileFormElement);
+validatorProfileForm.enableValidation();
 
 function openCardForm() {
   openPopup(popupCardElement);
-
-  const newFormValidator = new FormValidator(config, cardFormElement);
-  newFormValidator.enableValidation();
+  validatorCardForm.resetValidation();
 }
+
+const validatorCardForm = new FormValidator(config, cardFormElement);
+validatorCardForm.enableValidation();
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
@@ -101,8 +103,6 @@ function handleCardFormSubmit(evt) {
 
   evt.target.reset();
   closePopup(popupCardElement);
-  buttonCardFormSubmit.disabled = true;
-  buttonCardFormSubmit.classList.add('popup__submit_disabled');
 }
 
 buttonEditProfile.addEventListener('click', openProfileForm);
