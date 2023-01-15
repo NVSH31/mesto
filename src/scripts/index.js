@@ -1,3 +1,13 @@
+const logo = new URL('../images/logoheader.svg', import.meta.url);
+const avatar = new URL('../images/profile_avatar.png', import.meta.url);
+
+const localImages = [
+  { name: 'Логотип Mesto Russia', image: logo },
+  { name: 'Фото человека', image: avatar}
+];
+
+import '../pages/index.css';
+
 import {
   initialCards,
   config,

@@ -4,16 +4,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 <body class="page">
   <header class="header">
-    <img class="header__logo" src="./images/logoheader.svg" alt="Логотип Mesto Russia">
+    <img class="header__logo" src="<%=require('./images/logoheader.svg')%>" alt="Логотип Mesto Russia">
   </header>
   <main>
     <section class="profile">
-      <img class="profile__image" src="./images/profile_avatar.png" alt="Фото человека">
+      <img class="profile__image" src="<%=require('./images/profile_avatar.png')%>" alt="Фото человека">
       <div class="profile__info">
         <div class="profile__top-string">
           <h1 class="profile__name"></h1>
@@ -92,14 +91,14 @@
   <section class="popup popup_image">
     <div class="popup__container">
       <button type="button" class="popup__close-icon"></button>
-      <img class="popup__image" src="./images/" alt="">
+      <img class="popup__image" src="" alt="">
       <p class="popup__signature"></p>
     </div>
   </section>
   <template id="card-template">
     <li class="elements__item">
       <div class="element">
-        <img class="element__mask-group" src="./images/">
+        <img class="element__mask-group" src="">
         <div class="element__text-like">
           <h2 class="element__text"></h2>
           <button class="element__like" type="button"></button>
@@ -108,6 +107,5 @@
       </div>
     </li>
   </template>
-  <script type="module" src="./scripts/index.js"></script>
 </body>
 </html>
