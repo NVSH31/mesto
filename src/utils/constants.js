@@ -35,19 +35,8 @@ const config = {
 
 const cardTemplateSelector = '#card-template';
 
-const popupProfileElement = document.querySelector('.popup_profile');
-const profileFormElement = popupProfileElement.querySelector('.popup__form');
-const nameInputElement = popupProfileElement.querySelector('.popup__field_name');
-const jobInputElement = popupProfileElement.querySelector('.popup__field_job');
-
-const popupCardElement = document.querySelector('.popup_card');
-const cardFormElement = popupCardElement.querySelector('.popup__form');
-
-const buttonEditProfile = document.querySelector('.profile__edit-button');
-const buttonAddCard = document.querySelector('.profile__add-button');
-const profileElement = document.querySelector('.profile');
-const profileNameElement = profileElement.querySelector('.profile__name');
-const profileJobElement = profileElement.querySelector('.profile__job');
+const profileNameSelector = '.profile__name';
+const profileJobSelector = '.profile__job';
 
 const cardListSelector = '.elements__list';
 const popupProfileSelector = '.popup_profile';
@@ -57,23 +46,15 @@ const imageSelector = '.popup__image';
 const signatureSelector = '.popup__signature';
 const formSelector = '.popup__form';
 const popupOpenedClass = 'popup_opened';
-const popupCloseIconSelector = '.popup__close-icon';
+const popupCloseIconClass = 'popup__close-icon';
 const popupContainerSelector = '.popup__container';
 
 export {
   initialCards,
   config,
   cardTemplateSelector,
-  profileFormElement,
-  nameInputElement,
-  jobInputElement,
-  popupCardElement,
-  cardFormElement,
-  buttonEditProfile,
-  buttonAddCard,
-  profileElement,
-  profileNameElement,
-  profileJobElement,
+  profileNameSelector,
+  profileJobSelector,
   cardListSelector,
   popupProfileSelector,
   popupCardSelector,
@@ -82,6 +63,6 @@ export {
   signatureSelector,
   formSelector,
   popupOpenedClass,
-  popupCloseIconSelector,
+  popupCloseIconClass,
   popupContainerSelector
 }

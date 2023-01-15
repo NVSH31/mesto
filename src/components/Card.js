@@ -27,7 +27,6 @@ export class Card {
   _setEventListeners() {
     this._buttonLike = this._cardElement.querySelector('.element__like');
     this._buttonTrash = this._cardElement.querySelector('.element__trash');
-    this._image = this._cardElement.querySelector('img');
 
     this._buttonLike.addEventListener('click', () => {
       this._toggleLike();
@@ -44,7 +43,9 @@ export class Card {
 
   generateCard() {
     this._cardElement = this._getTemplate();
-    this._cardElement.querySelector('img').src = this._link;
+    this._image = this._cardElement.querySelector('img');
+    this._image.src = this._link;
+    this._image.alt = this._name;
     this._cardElement.querySelector('.element__text').textContent = this._name;
     this._setEventListeners();
 

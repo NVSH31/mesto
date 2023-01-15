@@ -1,13 +1,12 @@
 import {
   popupOpenedClass,
-  popupCloseIconSelector,
-  popupContainerSelector
-} from "./constants.js";
+  popupCloseIconClass
+} from "../utils/constants.js";
 
 export class Popup {
   constructor(popupSelector) {
     this._popupElement = document.querySelector(popupSelector);
-    this._popupCloseElement = this._popupElement.querySelector(popupCloseIconSelector);
+    this._popupCloseElement = this._popupElement.querySelector(`.${popupCloseIconClass}`);
     this._listener = this._handleEscClose.bind(this);
   }
 
@@ -20,7 +19,6 @@ export class Popup {
   open() {
     this._popupElement.classList.add(popupOpenedClass);
     document.addEventListener('keydown', this._listener);
-    this.setEventListeners();
   }
 
   close() {
@@ -29,11 +27,8 @@ export class Popup {
   }
 
   setEventListeners() {
-    this._popupCloseElement.addEventListener('click', () => {
-      this.close();
-    });
     this._popupElement.addEventListener('click', (evt) => {
-      if (!evt.target.closest(popupContainerSelector)) {
+      if (evt.target.classList.contains(popupOpenedClass) || evt.target.classList.contains(popupCloseIconClass)) {
         this.close();
       }
     });

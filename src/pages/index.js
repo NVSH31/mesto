@@ -12,45 +12,56 @@ import {
   initialCards,
   config,
   cardTemplateSelector,
-  profileFormElement,
-  nameInputElement,
-  jobInputElement,
-  cardFormElement,
-  buttonEditProfile,
-  buttonAddCard,
   cardListSelector,
   popupProfileSelector,
   popupCardSelector,
-  popupImageSelector
-} from './constants.js';
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
-import { Section } from './Section.js';
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
-import { UserInfo } from './UserInfo.js';
+  popupImageSelector,
+  profileNameSelector,
+  profileJobSelector,
+} from '../utils/constants.js';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
 
-function generateCard(cardData) {
+const popupProfileElement = document.querySelector('.popup_profile');
+const profileFormElement = popupProfileElement.querySelector('.popup__form');
+const nameInputElement = popupProfileElement.querySelector('.popup__field_name');
+const jobInputElement = popupProfileElement.querySelector('.popup__field_job');
+
+const popupCardElement = document.querySelector('.popup_card');
+const cardFormElement = popupCardElement.querySelector('.popup__form');
+
+const buttonEditProfile = document.querySelector('.profile__edit-button');
+const buttonAddCard = document.querySelector('.profile__add-button');
+
+function createCard(cardData) {
   const card = new Card(cardData, cardTemplateSelector, {
     handleCardClick: () => {
       popupImageElement.open(cardData);
     }
   });
-  const cardElement = card.generateCard();
+  return card;
+}
+
+function generateCard(cardData) {
+  const cardElement = createCard(cardData).generateCard();
   cardsList.addItem(cardElement);
 }
 
 const popupImageElement = new PopupWithImage(popupImageSelector);
+popupImageElement.setEventListeners();
 
 const cardsList = new Section(
   {
-    items: initialCards,
     renderer: cardData => {
       generateCard(cardData);
     }
   }, cardListSelector
 );
-cardsList.renderItems();
+cardsList.renderItems(initialCards);
 
 const popupCardFormElement = new PopupWithForm(
   popupCardSelector, {
@@ -62,11 +73,11 @@ const popupCardFormElement = new PopupWithForm(
     }
   }
 );
+popupCardFormElement.setEventListeners();
 
-const myInfo = new UserInfo();
-myInfo.setUserInfo({
-  name: 'Жак-Ив Кусто Очень Длинное Имя',
-  job: 'Исследователь океана, изобретатель акваланга, режиссёр, владелец корабля, банкрот'
+const myInfo = new UserInfo({
+  nameSelector: profileNameSelector,
+  jobSelector: profileJobSelector
 });
 
 const popupProfileFormElement = new PopupWithForm(
@@ -78,6 +89,7 @@ const popupProfileFormElement = new PopupWithForm(
     }
   }
 );
+popupProfileFormElement.setEventListeners();
 
 const validatorProfileForm = new FormValidator(config, profileFormElement);
 validatorProfileForm.enableValidation();
@@ -87,7 +99,8 @@ validatorCardForm.enableValidation();
 
 buttonEditProfile.addEventListener('click', () => {
   popupProfileFormElement.open();
-  nameInputElement.value = myInfo.getUserInfo().name;
-  jobInputElement.value = myInfo.getUserInfo().job;
+  const { name, job } = myInfo.getUserInfo();
+  nameInputElement.value = name;
+  jobInputElement.value = job;
 });
 buttonAddCard.addEventListener('click', () => { popupCardFormElement.open(); });
