@@ -4,22 +4,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 <body class="page">
   <header class="header">
-    <img class="header__logo" src="./images/logoheader.svg" alt="Логотип Mesto Russia">
+    <img class="header__logo" src="<%=require('./images/logoheader.svg')%>" alt="Логотип Mesto Russia">
   </header>
   <main>
     <section class="profile">
-      <img class="profile__image" src="./images/profile_avatar.png" alt="Фото человека">
+      <img class="profile__image" src="<%=require('./images/profile_avatar.png')%>" alt="Фото человека">
       <div class="profile__info">
         <div class="profile__top-string">
-          <h1 class="profile__name">Жак-Ив Кусто Очень Длинное Имя</h1>
+          <h1 class="profile__name"></h1>
         <button class="profile__edit-button" type="button"></button>
         </div>
-        <p class="profile__job">Исследователь океана, изобретатель акваланга, режиссёр, владелец корабля, банкрот</p>
+        <p class="profile__job"></p>
       </div>
       <button class="profile__add-button" type="button"></button>
     </section>
@@ -40,6 +39,7 @@
         <h2 class="popup__title">Редактировать профиль</h2>
         <input
           id="name-input"
+          name="name-input"
           class="popup__field popup__field_name"
           type="text"
           required
@@ -48,6 +48,7 @@
         <span id="name-input-error" class="popup__span"></span>
         <input
           id="job-input"
+          name="job-input"
           class="popup__field popup__field_job"
           type="text"
           required
@@ -65,6 +66,7 @@
         <h2 class="popup__title">Новое место</h2>
         <input
           id="title-input"
+          name="title-input"
           class="popup__field popup__field_title"
           type="text"
           placeholder='Название'
@@ -75,6 +77,7 @@
         </span>
         <input
           id="url-input"
+          name="url-input"
           class="popup__field popup__field_url"
           type="url"
           placeholder='Ссылка на картинку'
@@ -88,14 +91,14 @@
   <section class="popup popup_image">
     <div class="popup__container">
       <button type="button" class="popup__close-icon"></button>
-      <img class="popup__image" src="./images/" alt="">
+      <img class="popup__image" src="" alt="">
       <p class="popup__signature"></p>
     </div>
   </section>
   <template id="card-template">
     <li class="elements__item">
       <div class="element">
-        <img class="element__mask-group" src="./images/">
+        <img class="element__mask-group" src="">
         <div class="element__text-like">
           <h2 class="element__text"></h2>
           <button class="element__like" type="button"></button>
@@ -104,6 +107,5 @@
       </div>
     </li>
   </template>
-  <script type="module" src="./scripts/index.js"></script>
 </body>
 </html>
