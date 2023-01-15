@@ -2,40 +2,23 @@ import {
   initialCards,
   config,
   cardTemplateSelector,
-  allPopups,
-  popupProfileElement,
   profileFormElement,
   nameInputElement,
   jobInputElement,
-  popupCardElement,
   cardFormElement,
-  titleInputElement,
-  urlInputElement,
-  // popupImageElement,
-  // imageElement,
-  // signatureElement,
   buttonEditProfile,
   buttonAddCard,
-  profileElement,
-  profileNameElement,
-  profileJobElement,
-  // cardsListElement,
-  buttonCloseList,
   cardListSelector,
   popupProfileSelector,
   popupCardSelector,
-  popupImageSelector,
-  popupOpenedClass,
-  titleInputSelector,
-  urlInputSelector,
-  nameInputSelector,
-  jobInputSelector,
+  popupImageSelector
 } from './constants.js';
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 import { Section } from './Section.js';
 import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
+import { UserInfo } from './UserInfo.js';
 
 function generateCard(cardData) {
   const card = new Card(cardData, cardTemplateSelector, {
@@ -70,39 +53,31 @@ const popupCardFormElement = new PopupWithForm(
   }
 );
 
+const myInfo = new UserInfo();
+myInfo.setUserInfo({
+  name: 'Жак-Ив Кусто Очень Длинное Имя',
+  job: 'Исследователь океана, изобретатель акваланга, режиссёр, владелец корабля, банкрот'
+});
 
-
-// function openProfileForm() {
-//   openPopup(popupProfileElement);
-//   nameInputElement.value = profileNameElement.textContent;
-//   jobInputElement.value = profileJobElement.textContent;
-//   validatorProfileForm.resetValidation();
-// }
+const popupProfileFormElement = new PopupWithForm(
+  popupProfileSelector, {
+    handleFormSubmit: (formData) => {
+      const profileData = { name: formData['name-input'], job: formData['job-input'] };
+      myInfo.setUserInfo(profileData);
+      popupProfileFormElement.close();
+    }
+  }
+);
 
 const validatorProfileForm = new FormValidator(config, profileFormElement);
 validatorProfileForm.enableValidation();
 
-// function openCardForm() {
-//   openPopup(popupCardElement);
-//   validatorCardForm.resetValidation();
-// }
-
 const validatorCardForm = new FormValidator(config, cardFormElement);
 validatorCardForm.enableValidation();
 
-// function handleProfileFormSubmit(evt) {
-//   evt.preventDefault();
-//   profileNameElement.textContent = nameInputElement.value;
-//   profileJobElement.textContent = jobInputElement.value;
-//   closePopup(popupProfileElement);
-// }
-
-
-//   cardsListElement.prepend(createCard(newCardData));
-
-//   evt.target.reset();
-//   closePopup(popupCardElement);
-// }
-
-// buttonEditProfile.addEventListener('click', openProfileForm);
+buttonEditProfile.addEventListener('click', () => {
+  popupProfileFormElement.open();
+  nameInputElement.value = myInfo.getUserInfo().name;
+  jobInputElement.value = myInfo.getUserInfo().job;
+});
 buttonAddCard.addEventListener('click', () => { popupCardFormElement.open(); });
