@@ -15,7 +15,7 @@
   <main>
     <section class="profile">
       <div class="profile__image-container">
-        <img class="profile__image" src="" alt="Аватар">
+        <img class="profile__image" src="<%=require('./images/profile_avatar.png')%>" alt="Аватар">
         <div class="profile__overlay"></div>
       </div>
       <div class="profile__info">
@@ -74,9 +74,9 @@
       <button type="button" class="popup__close-icon"></button>
       <form class="popup__form" name="add-card" novalidate>
         <h2 class="popup__title">Обновить аватар</h2>
-        <input id="url-input" name="url-input" class="popup__field popup__field_url" type="url"
+        <input id="avatar-url-input" name="avatar-url-input" class="popup__field popup__field_url" type="url"
           placeholder='Ссылка на картинку' required>
-        <span id="url-input-error" class="popup__span popup__input-error">
+        <span id="avatar-url-input-error" class="popup__span popup__input-error">
         </span>
         <button type="submit" class="popup__submit popup__submit_disabled" disabled>Сохранить</button>
       </form>

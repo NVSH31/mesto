@@ -172,7 +172,7 @@ const popupAvatarFormElement = new PopupWithForm(
       const popupSubmitElement = avatarFormElement.querySelector('.popup__submit');
       textSubmitButton = popupSubmitElement.textContent;
       popupSubmitElement.textContent = textInTimeRequest;
-      api.editAvatar(formData['url-input'])
+      api.editAvatar(formData['avatar-url-input'])
         .then(res => {
           return res.ok? res.json() : Promise.reject(`Error: ${res.status}`);
         })
