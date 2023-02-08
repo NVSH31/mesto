@@ -35,7 +35,6 @@ const url = 'https://mesto.nomoreparties.co/v1';
 const cohort = 'cohort-59';
 const token = '2c81cee7-0b96-4411-b571-732e2b2c6fdf';
 
-const textInTimeRequest = 'Сохранение...';
 
 export {
   config,
@@ -62,6 +61,5 @@ export {
   likeCounterSelector,
   url,
   cohort,
-  token,
-  textInTimeRequest
+  token
 }

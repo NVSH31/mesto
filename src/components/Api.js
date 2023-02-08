@@ -4,22 +4,35 @@ export class Api {
     this._token = token,
     this._url = url
   }
+
+  _checkResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  }
+
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse);
+  }
+
   getInitialCards() {
-    return fetch(`${this._url}/${this._cohort}/cards`, {
-      headers: {
-        'authorization': this._token
-      }
-    });
+    return this._request(
+      `${this._url}/${this._cohort}/cards`, {
+          headers: {
+            'authorization': this._token
+          }
+        }
+    );
   }
+
   getMe() {
-    return fetch(`${this._url}/${this._cohort}/users/me`, {
+    return this._request(`${this._url}/${this._cohort}/users/me`, {
       headers: {
         'authorization': this._token
       }
     });
   }
+
   editMe(name, about) {
-    return fetch(`${this._url}/${this._cohort}/users/me`, {
+    return this._request(`${this._url}/${this._cohort}/users/me`, {
       method: 'PATCH',
       headers: {
         'authorization': this._token,
@@ -32,7 +45,7 @@ export class Api {
     });
   }
   addCard(name, link) {
-    return fetch(`${this._url}/${this._cohort}/cards`, {
+    return this._request(`${this._url}/${this._cohort}/cards`, {
       method: 'POST',
       headers: {
         'authorization': this._token,
@@ -42,7 +55,7 @@ export class Api {
     });
   }
   deleteCard(id) {
-    return fetch(`${this._url}/${this._cohort}/cards/${id}`, {
+    return this._request(`${this._url}/${this._cohort}/cards/${id}`, {
       method: 'DELETE',
       headers: {
         'authorization': this._token
@@ -50,7 +63,7 @@ export class Api {
     });
   }
   addLike(id) {
-    return fetch(`${this._url}/${this._cohort}/cards/${id}/likes`, {
+    return this._request(`${this._url}/${this._cohort}/cards/${id}/likes`, {
       method: 'PUT',
       headers: {
         'authorization': this._token
@@ -58,7 +71,7 @@ export class Api {
     });
   }
   deleteLike(id) {
-    return fetch(`${this._url}/${this._cohort}/cards/${id}/likes`, {
+    return this._request(`${this._url}/${this._cohort}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: {
         'authorization': this._token
@@ -66,7 +79,7 @@ export class Api {
     });
   }
   editAvatar(url) {
-    return fetch(`${this._url}/${this._cohort}/users/me/avatar`, {
+    return this._request(`${this._url}/${this._cohort}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         'authorization': this._token,

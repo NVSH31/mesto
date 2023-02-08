@@ -1,9 +1,11 @@
+import { likeCounterSelector } from '../utils/constants.js';
+
 export class Card {
   constructor(data, myId, templateSelector, {
     handleCardClick, handleTrashClick, handleLikeClick }) {
     this._name = data.name;
     this._link = data.link;
-    this._likes = data.likes;
+    this.likes = data.likes;
     this._ownerId = data.owner._id;
     this._myId = myId;
     this._id = data._id;
@@ -24,11 +26,11 @@ export class Card {
   }
 
   _toggleLike() {
-    this._handleLikeClick(this._id,  this._myId, this._likes, this._cardElement);
+    this._handleLikeClick(this._id,  this._myId, this.likes, this._cardElement);
   }
 
-  _getMyLIke() {
-    if (this._likes.find(user => user._id === this._myId)) {
+  setStatusMyLike(likes) {
+    if (likes.find(user => user._id === this._myId)) {
       this._buttonLike.classList.add('element__like_active');
       this._iLiked = true;
     } else {
@@ -36,6 +38,7 @@ export class Card {
       this._iLiked = false;
     }
   }
+
   _setEventListeners() {
     this._buttonLike.addEventListener('click', () => {
       this._toggleLike();
@@ -52,6 +55,9 @@ export class Card {
     });
   }
 
+  setCountLikes(count) {
+    this._cardElement.querySelector(likeCounterSelector).textContent = count;
+  }
   generateCard() {
     this._cardElement = this._getTemplate();
     this._buttonLike = this._cardElement.querySelector('.element__like');
@@ -60,12 +66,12 @@ export class Card {
     this._image.src = this._link;
     this._image.alt = this._name;
     this._cardElement.querySelector('.element__text').textContent = this._name;
-    this._cardElement.querySelector('.element__like-counter').textContent = this._likes.length;
     if (this._ownerId != this._myId) {
-      this._cardElement.querySelector('.element__trash').remove();
+      this._buttonTrash.remove();
     }
+    this.setCountLikes(this.likes.length);
     this._setEventListeners();
-    this._getMyLIke();
+    this.setStatusMyLike(this.likes);
 
     return this._cardElement;
   }

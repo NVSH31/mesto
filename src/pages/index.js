@@ -21,13 +21,9 @@ import {
   profileJobSelector,
   profileImageSelector,
   profileOverlaySelector,
-  likeSelector,
-  likeClassActive,
-  likeCounterSelector,
   url,
   cohort,
-  token,
-  textInTimeRequest
+  token
 } from '../utils/constants.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
@@ -39,44 +35,25 @@ import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 import { data } from 'autoprefixer';
 
-const popupProfileElement = document.querySelector('.popup_profile');
-const profileFormElement = popupProfileElement.querySelector('.popup__form');
-const nameInputElement = popupProfileElement.querySelector('.popup__field_name');
-const jobInputElement = popupProfileElement.querySelector('.popup__field_job');
+const profileFormElement = document.forms["edit-profile"];
 
-const profileElement = document.querySelector('.profile');
-const profileImageElement = profileElement.querySelector(profileImageSelector);
-const profileNameElement = profileElement.querySelector(profileNameSelector);
-const profileJobElement = profileElement.querySelector(profileJobSelector);
 let myId = '';
 
-const popupCardElement = document.querySelector('.popup_card');
-const cardFormElement = popupCardElement.querySelector('.popup__form');
+const cardFormElement = document.forms["add-card"];
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonAddCard = document.querySelector('.profile__add-button');
 
-const popupEditAvatar = document.querySelector(popupAvatarSelector);
 const buttonEditAvatar = document.querySelector(profileOverlaySelector);
-const avatarFormElement = popupEditAvatar.querySelector('.popup__form');
-
-let textSubmitButton = '';
+const avatarFormElement = document.forms["edit-avatar"];
 
 const api = new Api(cohort, token, url);
 
-api.getMe()
-  .then(res => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  })
-  .then(data => {
-    profileNameElement.textContent = data.name;
-    profileJobElement.textContent = data.about;
-    profileImageElement.src = data.avatar;
-    myId = data._id;
-  })
-  .catch(Error => {
-    console.log(Error);
-  });
+const myInfo = new UserInfo({
+  nameSelector: profileNameSelector,
+  jobSelector: profileJobSelector,
+  imageSelector: profileImageSelector
+});
 
 function createCard(cardData) {
   const card = new Card(cardData, myId, cardTemplateSelector, {
@@ -89,24 +66,18 @@ function createCard(cardData) {
     handleLikeClick: (id, myId, likes, cardMarkup) => {
       if (likes.find(user => user._id === myId)) {
         api.deleteLike(id)
-          .then(res => {
-            return res.ok? res.json() : Promise.reject(`Error: ${res.status}`);
-          })
           .then(data => {
-            cardMarkup.querySelector(likeCounterSelector).textContent = data.likes.length;
-            cardMarkup.querySelector(likeSelector).classList.remove(likeClassActive);
-            card._likes = data.likes;
+            card.setCountLikes(data.likes.length);
+            card.setStatusMyLike(data.likes);
+            card.likes = data.likes;
           })
           .catch(Error => console.log(Error));
       } else {
         api.addLike(id)
-          .then(res => {
-            return res.ok? res.json() : Promise.reject(`Error: ${res.status}`);
-          })
           .then(data => {
-            cardMarkup.querySelector(likeCounterSelector).textContent = data.likes.length;
-            cardMarkup.querySelector(likeSelector).classList.add(likeClassActive);
-            card._likes = data.likes;
+            card.setCountLikes(data.likes.length);
+            card.setStatusMyLike(data.likes);
+            card.likes = data.likes;
           })
           .catch(Error => console.log(Error));
       }
@@ -131,102 +102,86 @@ const cardsList = new Section(
   }, cardListSelector
 );
 
-Promise.all([api.getMe(),])
-  .then(() => {
-    api.getInitialCards()
-      .then(res => {
-        return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-      })
-      .then(data => {
-        cardsList.renderItems(data);
-      })
-      .catch(Error => console.log(Error));
-  });
-
+Promise.all([api.getMe(), api.getInitialCards()])
+  .then(([userData, cardsData]) => {
+    myInfo.setUserInfo({
+      name: userData.name,
+      job: userData.about,
+      image: userData.avatar,
+      userId: userData._id
+    });
+    myId = myInfo.getUserInfo().userId;
+    cardsList.renderItems(cardsData);
+  })
+  .catch(Error => console.log(Error));
 
 const popupCardFormElement = new PopupWithForm(
   popupCardSelector, {
-    handleFormSubmit: (formData) => {
-      const popupSubmitElement = cardFormElement.querySelector('.popup__submit');
-      textSubmitButton = popupSubmitElement.textContent;
-      popupSubmitElement.textContent = textInTimeRequest;
-      api.addCard(formData['title-input'], formData['url-input'])
-        .then(res => {
-          return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-        })
-        .then((data) => {
-          cardsList.renderItems([data,]);
-        })
-        .catch(Error => console.log(Error))
-        .finally(() => popupSubmitElement.textContent = textSubmitButton);
-      popupCardFormElement.close();
-      validatorCardForm.resetValidation();
-    }
+  handleFormSubmit: (formData) => {
+    popupCardFormElement.renderLoading(true);
+    api.addCard(formData['title-input'], formData['url-input'])
+      .then((data) => {
+        cardsList.renderItems([data,]);
+        popupCardFormElement.close();
+      })
+      .catch(Error => console.log(Error))
+      .finally(() => popupCardFormElement.renderLoading(false));
   }
+}
 );
 popupCardFormElement.setEventListeners();
 
 const popupAvatarFormElement = new PopupWithForm(
   popupAvatarSelector, {
-    handleFormSubmit: (formData) => {
-      const popupSubmitElement = avatarFormElement.querySelector('.popup__submit');
-      textSubmitButton = popupSubmitElement.textContent;
-      popupSubmitElement.textContent = textInTimeRequest;
-      api.editAvatar(formData['avatar-url-input'])
-        .then(res => {
-          return res.ok? res.json() : Promise.reject(`Error: ${res.status}`);
-        })
-        .then(data => {
-          profileImageElement.src = data.avatar;
-        })
-        .catch(Error => console.log(Error))
-        .finally(() => popupSubmitElement.textContent = textSubmitButton);
-      popupAvatarFormElement.close();
-      validatatorAvatarForm.resetValidation();
-    }
+  handleFormSubmit: (formData) => {
+    popupAvatarFormElement.renderLoading(true);
+    api.editAvatar(formData['avatar-url-input'])
+      .then(data => {
+        myInfo.setUserInfo({
+          name: data.name,
+          job: data.about,
+          image: data.avatar,
+          userId: data._id
+        });
+        popupAvatarFormElement.close();
+      })
+      .catch(Error => console.log(Error))
+      .finally(() => popupAvatarFormElement.renderLoading(false));
   }
+}
 );
 popupAvatarFormElement.setEventListeners();
 
 const popupDeleteCardElement = new PopupDeleteCard(
   popupDeleteSelector, {
-    handleFormSubmit: (id, cardMarkup) => {
-      api.deleteCard(id)
-        .then(res => {
-          return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-        })
-        .then((data) => {
-          cardMarkup.innerHTML = '';
-        })
-        .catch((Error => console.log(Error)));
-      popupDeleteCardElement.close();
-    }
+  handleFormSubmit: (id, cardMarkup) => {
+    api.deleteCard(id)
+      .then(() => {
+        cardMarkup.remove();
+      })
+      .catch((Error => console.log(Error)));
+    popupDeleteCardElement.close();
   }
+}
 );
 popupDeleteCardElement.setEventListeners();
-
-
-const myInfo = new UserInfo({
-  nameSelector: profileNameSelector,
-  jobSelector: profileJobSelector
-});
 
 const popupProfileFormElement = new PopupWithForm(
   popupProfileSelector, {
   handleFormSubmit: (formData) => {
-    const popupSubmitElement = profileFormElement.querySelector('.popup__submit');
-    textSubmitButton = popupSubmitElement.textContent;
-    popupSubmitElement.textContent = textInTimeRequest;
+    popupProfileFormElement.renderLoading(true);
     api.editMe(formData['name-input'], formData['job-input'])
-      .then(res => {
-        return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-      })
       .then(data => {
-        myInfo.setUserInfo({ name: data.name, job: data.about });
+        myInfo.setUserInfo({
+          name: data.name,
+          job: data.about,
+          image: data.avatar,
+          userId: data._id
+        });
+        popupProfileFormElement.close();
       })
       .catch(Error => console.log(Error))
-      .finally(() => popupSubmitElement.textContent = textSubmitButton);
-    popupProfileFormElement.close();
+      .finally(() => popupProfileFormElement.renderLoading(false));
   }
 }
 );
@@ -243,10 +198,17 @@ validatatorAvatarForm.enableValidation();
 
 buttonEditProfile.addEventListener('click', () => {
   popupProfileFormElement.open();
-  const { name, job } = myInfo.getUserInfo();
-  nameInputElement.value = name;
-  jobInputElement.value = job;
+  const dataInputs = {};
+  dataInputs['name-input'] = myInfo.getUserInfo().name;
+  dataInputs['job-input'] = myInfo.getUserInfo().job;
+  popupProfileFormElement.setInputValues(dataInputs);
 });
-buttonAddCard.addEventListener('click', () => { popupCardFormElement.open(); });
+buttonAddCard.addEventListener('click', () => {
+  popupCardFormElement.open();
+  validatorCardForm.resetValidation();
+});
 
-buttonEditAvatar.addEventListener('click', () => { popupAvatarFormElement.open();});
+buttonEditAvatar.addEventListener('click', () => {
+  popupAvatarFormElement.open();
+  validatatorAvatarForm.resetValidation();
+});
