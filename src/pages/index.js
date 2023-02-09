@@ -20,10 +20,7 @@ import {
   profileNameSelector,
   profileJobSelector,
   profileImageSelector,
-  profileOverlaySelector,
-  url,
-  cohort,
-  token
+  profileOverlaySelector
 } from '../utils/constants.js';
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/FormValidator.js';
@@ -47,7 +44,13 @@ const buttonAddCard = document.querySelector('.profile__add-button');
 const buttonEditAvatar = document.querySelector(profileOverlaySelector);
 const avatarFormElement = document.forms["edit-avatar"];
 
-const api = new Api(cohort, token, url);
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59',
+  headers: {
+    'authorization': '2c81cee7-0b96-4411-b571-732e2b2c6fdf',
+    'Content-Type': 'application/json',
+  }
+});
 
 const myInfo = new UserInfo({
   nameSelector: profileNameSelector,
@@ -96,20 +99,13 @@ popupImageElement.setEventListeners();
 
 const cardsList = new Section(
   {
-    renderer: cardData => {
-      generateCard(cardData);
-    }
+    renderer: generateCard
   }, cardListSelector
 );
 
 Promise.all([api.getMe(), api.getInitialCards()])
   .then(([userData, cardsData]) => {
-    myInfo.setUserInfo({
-      name: userData.name,
-      job: userData.about,
-      image: userData.avatar,
-      userId: userData._id
-    });
+    myInfo.setUserInfo(userData);
     myId = myInfo.getUserInfo().userId;
     cardsList.renderItems(cardsData);
   })
@@ -137,12 +133,7 @@ const popupAvatarFormElement = new PopupWithForm(
     popupAvatarFormElement.renderLoading(true);
     api.editAvatar(formData['avatar-url-input'])
       .then(data => {
-        myInfo.setUserInfo({
-          name: data.name,
-          job: data.about,
-          image: data.avatar,
-          userId: data._id
-        });
+        myInfo.setUserInfo(data);
         popupAvatarFormElement.close();
       })
       .catch(Error => console.log(Error))
@@ -158,9 +149,9 @@ const popupDeleteCardElement = new PopupDeleteCard(
     api.deleteCard(id)
       .then(() => {
         cardMarkup.remove();
+        popupDeleteCardElement.close();
       })
       .catch((Error => console.log(Error)));
-    popupDeleteCardElement.close();
   }
 }
 );
@@ -172,12 +163,7 @@ const popupProfileFormElement = new PopupWithForm(
     popupProfileFormElement.renderLoading(true);
     api.editMe(formData['name-input'], formData['job-input'])
       .then(data => {
-        myInfo.setUserInfo({
-          name: data.name,
-          job: data.about,
-          image: data.avatar,
-          userId: data._id
-        });
+        myInfo.setUserInfo(data);
         popupProfileFormElement.close();
       })
       .catch(Error => console.log(Error))
@@ -198,9 +184,10 @@ validatatorAvatarForm.enableValidation();
 
 buttonEditProfile.addEventListener('click', () => {
   popupProfileFormElement.open();
+  const { name, job } = myInfo.getUserInfo();
   const dataInputs = {};
-  dataInputs['name-input'] = myInfo.getUserInfo().name;
-  dataInputs['job-input'] = myInfo.getUserInfo().job;
+  dataInputs['name-input'] = name;
+  dataInputs['job-input'] = job;
   popupProfileFormElement.setInputValues(dataInputs);
 });
 buttonAddCard.addEventListener('click', () => {

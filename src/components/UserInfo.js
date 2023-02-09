@@ -15,10 +15,10 @@ export class UserInfo {
     }
   }
 
-  setUserInfo({ name, job, image, userId}) {
+  setUserInfo({ name, about, avatar, _id}) {
     this._profileNameElement.textContent = name;
-    this._profileJobElement.textContent = job;
-    this._profileImageElement.src = image;
-    this._userId = userId;
+    this._profileJobElement.textContent = about;
+    this._profileImageElement.src = avatar;
+    this._userId = _id;
   }
 }

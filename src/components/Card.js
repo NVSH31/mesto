@@ -56,11 +56,12 @@ export class Card {
   }
 
   setCountLikes(count) {
-    this._cardElement.querySelector(likeCounterSelector).textContent = count;
+    this._counterLikes.textContent = count;
   }
   generateCard() {
     this._cardElement = this._getTemplate();
     this._buttonLike = this._cardElement.querySelector('.element__like');
+    this._counterLikes = this._cardElement.querySelector(likeCounterSelector);
     this._buttonTrash = this._cardElement.querySelector('.element__trash');
     this._image = this._cardElement.querySelector('img');
     this._image.src = this._link;

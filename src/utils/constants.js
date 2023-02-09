@@ -31,11 +31,6 @@ const likeSelector = '.element__like';
 const likeClassActive = 'element__like_active';
 const likeCounterSelector = '.element__like-counter';
 
-const url = 'https://mesto.nomoreparties.co/v1';
-const cohort = 'cohort-59';
-const token = '2c81cee7-0b96-4411-b571-732e2b2c6fdf';
-
-
 export {
   config,
   cardTemplateSelector,
@@ -58,8 +53,5 @@ export {
   popupContainerSelector,
   likeSelector,
   likeClassActive,
-  likeCounterSelector,
-  url,
-  cohort,
-  token
+  likeCounterSelector
 }

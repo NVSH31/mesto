@@ -1,8 +1,7 @@
 export class Api {
-  constructor(cohort, token, url) {
-    this._cohort = cohort,
-    this._token = token,
-    this._url = url
+  constructor({ baseUrl, headers}) {
+    this._baseUrl = baseUrl,
+    this._headers = headers
   }
 
   _checkResponse(res) {
@@ -14,30 +13,17 @@ export class Api {
   }
 
   getInitialCards() {
-    return this._request(
-      `${this._url}/${this._cohort}/cards`, {
-          headers: {
-            'authorization': this._token
-          }
-        }
-    );
+    return this._request(`${this._baseUrl}/cards`, { headers: this._headers });
   }
 
   getMe() {
-    return this._request(`${this._url}/${this._cohort}/users/me`, {
-      headers: {
-        'authorization': this._token
-      }
-    });
+    return this._request(`${this._baseUrl}/users/me`, { headers: this._headers });
   }
 
   editMe(name, about) {
-    return this._request(`${this._url}/${this._cohort}/users/me`, {
+    return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        'authorization': this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: name,
         about: about
@@ -45,46 +31,34 @@ export class Api {
     });
   }
   addCard(name, link) {
-    return this._request(`${this._url}/${this._cohort}/cards`, {
+    return this._request(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {
-        'authorization': this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({name, link})
     });
   }
   deleteCard(id) {
-    return this._request(`${this._url}/${this._cohort}/cards/${id}`, {
+    return this._request(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
-      headers: {
-        'authorization': this._token
-      }
+      headers: this._headers
     });
   }
   addLike(id) {
-    return this._request(`${this._url}/${this._cohort}/cards/${id}/likes`, {
+    return this._request(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
-      headers: {
-        'authorization': this._token
-      }
+      headers: this._headers
     });
   }
   deleteLike(id) {
-    return this._request(`${this._url}/${this._cohort}/cards/${id}/likes`, {
+    return this._request(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
-      headers: {
-        'authorization': this._token
-      }
+      headers: this._headers
     });
   }
   editAvatar(url) {
-    return this._request(`${this._url}/${this._cohort}/users/me/avatar`, {
+    return this._request(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        'authorization': this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: url
       })
